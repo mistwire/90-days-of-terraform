@@ -6,7 +6,7 @@ terraform {
 
   required_providers {
     aws = {
-      source  = "hashicorp/aws"
+      source = "hashicorp/aws"
       # ~> is the "pessimistic constraint operator"
       # ~> 5.0 means: >= 5.0.0 AND < 6.0.0
       # This allows minor and patch updates but prevents major version upgrades
@@ -79,6 +79,9 @@ data "aws_ami" "amazon_linux" {
   # This fetches the most recent Amazon Linux 2 AMI
 }
 
+data "aws_caller_identity" "current" {}
+data "aws_region" "current" {}
+
 # Resource Block
 # Defines infrastructure components to create, update, or delete
 # Resources are the core building blocks of your infrastructure
@@ -102,12 +105,12 @@ resource "aws_vpc" "main" {
 }
 
 resource "aws_subnet" "public" {
-  count             = 2
+  count = 2
   # Dot notation (resource_type.resource_name.attribute) references other resources
   # Format: <resource_type>.<local_name>.<attribute>
   # Here we're accessing the 'id' attribute of the VPC resource we created above
   # This creates an implicit dependency: subnets wait for VPC to be created first
-  vpc_id            = aws_vpc.main.id
+  vpc_id = aws_vpc.main.id
   # cidrsubnet() function calculates subnet CIDR blocks from a parent CIDR
   # Syntax: cidrsubnet(prefix, newbits, netnum)
   # Example: cidrsubnet("10.0.0.0/16", 8, 0) = "10.0.0.0/24"
@@ -151,7 +154,7 @@ output "subnet_ids" {
   # When a resource uses 'count', it creates multiple instances
   # [*] iterates over all instances and extracts the specified attribute
   # This returns a list: ["subnet-id-1", "subnet-id-2"] instead of one value
-  value       = aws_subnet.public[*].id
+  value = aws_subnet.public[*].id
 }
 
 output "availability_zones" {
@@ -167,4 +170,33 @@ output "amazon_linux_ami_id" {
 output "internet_gateway_id" {
   description = "The ID of the Internet Gateway"
   value       = aws_internet_gateway.main.id
+}
+
+
+# -----------------------------------------------------
+output "account_id" {
+  description = "The AWS Account ID"
+  value       = data.aws_caller_identity.current.account_id
+  sensitive   = true
+}
+
+output "region_name" {
+  description = "The current AWS region"
+  value       = data.aws_region.current.region
+}
+
+output "available_azs" {
+  description = "List of available AZs"
+  value       = data.aws_availability_zones.available.names
+}
+
+output "vpc_id" {
+  description = "ID of the development VPC"
+  value       = aws_vpc.development.id
+}
+
+output "combined_info" {
+  description = "Combined region and account information"
+  value       = "${data.aws_caller_identity.current.account_id}-${data.aws_region.current.region}"
+  sensitive   = true
 }
