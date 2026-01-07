@@ -106,6 +106,6 @@ resource "aws_route_table" "private" {
     Environment = var.environment
     Project     = var.project_name
     ManagedBy   = "terraform"
-    Region      = data.aws_region.current.id
+    Region      = data.aws_region.current.region
   }
 }
