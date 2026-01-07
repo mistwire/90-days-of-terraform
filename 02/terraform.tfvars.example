@@ -1,0 +1,37 @@
+# terraform.tfvars - Variable Values File
+# This file contains actual values for variables defined in variables.tf
+# Unlike variables.tf (which defines variable structure), this file assigns specific values
+#
+# IMPORTANT: This file is in .gitignore because it often contains:
+# - Environment-specific configurations (dev, staging, prod)
+# - Sensitive data like database passwords, API keys, or account IDs
+# - Personal/team-specific settings that shouldn't be committed to version control
+#
+# Best Practices:
+# - Create terraform.tfvars.example with dummy values to commit to git
+# - Each team member/environment should have their own terraform.tfvars
+# - For production, use tools like HashiCorp Vault
+# - Use terraform.tfvars for local development, but use -var-file for different environments
+
+# Environment identifier - determines naming convention and resource tags
+# Common values: "development", "staging", "production"
+# This value prefixes resource names (e.g., "development-vpc")
+# Overrides the default "production" value from variables.tf
+environment  = "development"
+
+# VPC CIDR block - defines the entire IP address space for your Virtual Private Cloud
+# Format: IP/prefix (e.g., 172.16.0.0/16 gives you 65,536 IP addresses)
+# Using 172.16.0.0/16 instead of default 10.0.0.0/16 to avoid conflicts
+# with existing networks or VPNs that commonly use 10.x.x.x ranges
+vpc_cidr     = "172.16.0.0/16"
+
+# Subnet CIDR block - defines IP range for a specific subnet within the VPC
+# Must be a subset of vpc_cidr (172.16.1.0/24 fits within 172.16.0.0/16)
+# /24 provides 256 addresses (254 usable, AWS reserves 5 per subnet)
+# Example: 172.16.1.0 to 172.16.1.255
+subnet_cidr  = "172.16.1.0/24"
+
+# Project name - used for resource tagging and organization
+# Helps with cost allocation, resource grouping, and billing reports
+# This appears in the "Project" tag on all created resources
+project_name = "dynamic-infrastructure"
