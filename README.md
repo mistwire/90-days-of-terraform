@@ -12,7 +12,7 @@ For 90 days (January 6 - April 4, 2025), I'm rebuilding my Terraform fluency fro
 
 | Week | Focus Area | Project | Status | Content |
 |------|-----------|---------|--------|---------|
-| **Week 1** | Foundations | Complete Bryan Krausen Course | 🟡 In Progress (66%) | - |
+| **Week 1** | Foundations | Complete Bryan Krausen Course | 🟡 In Progress (76%) | - |
 | **Week 2** | Core Patterns | Enterprise VPC Module | ⚪ Not Started | Blog Post Planned |
 | **Week 3** | Application Architecture | 3-Tier App Deployment | ⚪ Not Started | Video Demo Planned |
 | **Week 4** | Multi-Environment | Dev/Staging/Prod Workspaces | ⚪ Not Started | Blog Post Planned |
