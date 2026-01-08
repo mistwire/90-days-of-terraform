@@ -22,8 +22,9 @@ locals {
     Owner       = "devops-team"
     CostCenter  = "cc-5678"
     # Locals can reference data sources - this dynamically gets the current region
-    Region      = data.aws_region.current.region
-    ManagedBy   = "terraform"
+    Region    = data.aws_region.current.region
+    ManagedBy = "terraform"
+    Lab       = "lab-07"
   }
 
   # Computed naming prefix for consistent resource naming
@@ -48,7 +49,7 @@ resource "aws_vpc" "main" {
   tags = {
     # Combining local.name_prefix with other values for a descriptive resource name
     # This creates something like: "dev-tf-vpc-us-east-1"
-    Name        = "${local.name_prefix}vpc-${data.aws_region.current.region}"
+    Name = "${local.name_prefix}vpc-${data.aws_region.current.region}"
     # Accessing individual values from the local.tags map
     # Format: local.<local_name>.<map_key>
     Environment = local.tags.Environment
@@ -120,9 +121,9 @@ resource "aws_subnet" "public_b" {
 # Private subnets don't have direct internet access (map_public_ip_on_launch = false)
 # Typically used for databases, internal services, and backend applications
 resource "aws_subnet" "private_a" {
-  vpc_id                  = aws_vpc.main.id
-  cidr_block              = "10.0.3.0/24"
-  availability_zone       = "us-east-1a"
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "10.0.3.0/24"
+  availability_zone = "us-east-1a"
   # false = private subnet, instances won't get public IPs automatically
   map_public_ip_on_launch = false
 
@@ -174,8 +175,8 @@ resource "aws_security_group" "web" {
   # Ingress Block: Defines INBOUND traffic rules (traffic coming TO your resources)
   # This rule allows HTTP traffic from anywhere on the internet
   ingress {
-    from_port = 80 # Starting port in the range
-    to_port   = 80 # Ending port in the range (same = single port)
+    from_port = 80    # Starting port in the range
+    to_port   = 80    # Ending port in the range (same = single port)
     protocol  = "tcp" # Protocol: tcp, udp, icmp, or -1 for all
     # CIDR blocks that are allowed to connect
     # 0.0.0.0/0 means "anywhere on the internet" (all IPv4 addresses)
