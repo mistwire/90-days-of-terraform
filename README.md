@@ -26,7 +26,7 @@ Why both? Terraform providers are written in Go. By learning them together, I'm 
 ### Week 1: Foundations (January 6-12, 2025)
 
 #### Day 1: Terraform Basics - Core Blocks
-**Directory:** [`01-the-basics/`](01-the-basics/)
+**Directory:** [`01/`](01/)
 **Concepts covered:**
 - Terraform, Provider, Variable, Data, Resource, and Output blocks
 - CIDR notation and VPC networking fundamentals
