@@ -80,20 +80,19 @@ Why both? Terraform providers are written in Go. By learning them together, I'm 
 
 ---
 
-#### Day 5: Go Fundamentals - Switch Statements
+#### Day 5: Go Fundamentals - Control Flow & Types
 **Directory:** [`05/`](05/)
 **Language:** Go
 **Concepts covered:**
-- Package declaration (`package main` for executables)
-- Import statements and Go standard library
-- Short variable declaration (`:=`) with type inference
-- `rand.Intn()` for random number generation
-- `Printf` with format verbs (`%v`, `%d`, `%s`, `%T`, `%t`)
-- Expression-less switch statements (`switch { case condition: ... }`)
-- Case evaluation order and automatic break behavior
-- How Go's switch differs from C/Java/JavaScript
+- User input with `fmt.Scanln()`, multiple return values, error handling (`if err != nil`)
+- Variable declaration patterns (`:=`, `var`, blank identifier `_`, zero values)
+- Type inference and explicit type conversion (no implicit casting)
+- Expression-less switch statements and if/else conditionals
+- Comparison operators (`==`, `!=`, `<`, `>`) and logical operators (`&&`, `||`, `!`)
+- The `init()` function and short-circuit evaluation
+- If statement with initialization (comma-ok idiom), scoped variables
 
-**Key takeaway:** Go's expression-less switch is powerful for evaluating multiple different boolean conditions. Unlike other languages, it automatically exits after a match—no explicit `break` needed.
+**Key takeaway:** Go is explicit by design—no implicit type conversions, unused variables cause errors, and the blank identifier `_` makes ignored values intentional. The comma-ok idiom (`if val, ok := map[key]; ok`) is a fundamental Go pattern for safe operations.
 
 ---
 
