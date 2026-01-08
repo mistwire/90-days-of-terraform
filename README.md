@@ -1,169 +1,162 @@
-# 90 Days to Terraform Fluency
+# 90 Days of Terraform & Go
 
 ---
 
 ## 🎯 The Mission
 
-For 90 days (January 6 - April 4, 2025), I'm rebuilding my Terraform fluency from the ground up—and documenting everything publicly.
+Learning Terraform and Go from the ground up—documented publicly for my future self.
 
-## 📊 Progress Tracker
+This repository tracks 90 learning sessions focused on two interconnected goals:
+1. **Terraform mastery**: Building production-ready infrastructure as code skills
+2. **Go fundamentals**: Learning the language to eventually create custom Terraform providers
 
-### Overall Status: **Week 1 of 13** (In Progress)
+Why both? Terraform providers are written in Go. By learning them together, I'm building toward the ability to extend Terraform with custom providers when existing ones don't meet my needs.
 
-| Week | Focus Area | Project | Status | Content |
-|------|-----------|---------|--------|---------|
-| **Week 1** | Foundations | Complete Bryan Krausen Course | 🟡 In Progress (76%) | - |
-| **Week 2** | Core Patterns | Enterprise VPC Module | ⚪ Not Started | Blog Post Planned |
-| **Week 3** | Application Architecture | 3-Tier App Deployment | ⚪ Not Started | Video Demo Planned |
-| **Week 4** | Multi-Environment | Dev/Staging/Prod Workspaces | ⚪ Not Started | Blog Post Planned |
-| **Week 5** | Dynamic Resources | for_each & count Patterns | ⚪ Not Started | vBrownBag Episode |
-| **Week 6** | Module Composition | Composable Module Library | ⚪ Not Started | Blog Post Planned |
-| **Week 7** | Policy as Code | Sentinel/OPA Integration | ⚪ Not Started | Conference Talk Outline |
-| **Week 8** | Disaster Recovery | Blue/Green Deployment | ⚪ Not Started | Blog Post Planned |
-| **Week 9** | HashiCorp Stack | Terraform + Vault | ⚪ Not Started | Video Demo Planned |
-| **Week 10** | Orchestration | Terraform + Nomad | ⚪ Not Started | Blog Post Planned |
-| **Week 11** | Integration Demo | Full Stack Demo | ⚪ Not Started | Conference Talk (30min) |
-| **Week 12** | Provider Contribution | Submit PR to Terracurl | ⚪ Not Started | Blog Post Planned |
-| **Week 13** | Polish & Prep | Conference Talk Ready | ⚪ Not Started | Final Demo |
+## 📚 Learning Philosophy
 
-**Legend:**
-- 🟢 Complete
-- 🟡 In Progress
-- 🔵 Adjusted/Modified
-- ⚪ Not Started
-- 🔴 Blocked
+**Starting from zero** - Complete beginner in both Terraform and Go
+**Learn in public** - Documenting for future reference and potential value to others
+**Comprehensive comments** - Every code example includes detailed explanatory remarks
+**Hands-on focus** - Building real examples, not just theory
 
 ---
 
-## 📈 Weekly Rhythm
+## 📊 Daily Learning Log
 
-**Monday (1 hour):**
-- Review last week's progress
-- Start this week's project
-- Quick check-in with accountability coach
+### Week 1: Foundations (January 6-12, 2025)
 
-**Tuesday-Wednesday (1 hour each):**
-- Deep work on Terraform project
-- Code, test, iterate
+#### Day 1: Terraform Basics - Core Blocks
+**Directory:** [`01-the-basics/`](01-the-basics/)
+**Concepts covered:**
+- Terraform, Provider, Variable, Data, Resource, and Output blocks
+- CIDR notation and VPC networking fundamentals
+- The `~>` pessimistic constraint operator for provider versions
+- Dot notation for resource references and implicit dependencies
+- String interpolation with `${...}` syntax
+- The splat operator `[*]` for accessing attributes from counted resources
+- `cidrsubnet()` function for calculating subnet CIDR blocks
 
-**Thursday (1 hour):**
-- Finish Terraform code
-- Test thoroughly, document
-- Start content outline (blog or video)
-
-**Friday (6 hours):**
-- **Hours 1-2:** Polish code, push to GitHub
-- **Hours 3-5:** Create content (write blog OR record video)
-- **Hour 6:** Publish, share on social, reflect on week
-
-**Weekend:**
-- Zero study time
-- Optional: Review published content, engage with comments
+**Key takeaway:** Understanding the six core block types is the foundation for everything in Terraform.
 
 ---
 
-## 🎯 The Three-Track Approach
+#### Day 2: Data Sources and Network Structure
+**Directory:** [`02/`](02/)
+**Concepts covered:**
+- Deep dive into AWS data sources (regions, AZs, caller identity)
+- VPC structure with DNS settings
+- Private subnets and their characteristics
+- Route tables and traffic flow fundamentals
+- Tagging strategies for organization and cost tracking
 
-While Terraform is the primary focus, I'm also building complementary skills:
-
-### Track 1: Terraform (60% of time)
-- Demo-ready fluency for live conference presentations
-- Production-quality modules and patterns
-- HashiCorp stack integration (Vault, Nomad)
-
-### Track 2: Go + AI (30% of time)
-- Reading Terraform provider code
-- Building CLI tools for DevRel work
-- Exploring AI + Infrastructure as Code
-
-### Track 3: Brand + Leadership (10% of time)
-- Weekly content creation (blog posts, videos, vBrownBag)
-- Community engagement
+**Key takeaway:** Data sources are read-only queries that fetch existing infrastructure information—essential for making configurations dynamic and aware of their environment.
 
 ---
 
-## 📝 Content Published
+#### Day 3: Locals and the merge() Function
+**Directory:** [`03/`](03/)
+**Concepts covered:**
+- Local values for DRY principle and computed values
+- `merge()` function for combining maps
+- Difference between locals and variables
+- Public vs private subnets (`map_public_ip_on_launch`)
+- Security groups as virtual firewalls (stateful, default-deny)
+- Ingress and egress rules (inbound/outbound traffic)
 
-### Blog Posts
-- [ ] Week 2: "Back to Basics: Building Production VPCs with Terraform"
-- [ ] Week 4: "Managing Multiple Environments with Terraform"
-- [ ] Week 6: "Building Composable Terraform Modules"
-- [ ] Week 8: "DR Strategies with Terraform"
-- [ ] Week 10: "Terraform + Nomad 101"
-- [ ] Week 12: "My First Terraform Provider Contribution"
-
-### Videos
-- [ ] Week 3: 3-Tier App Deployment Demo
-- [ ] Week 5: vBrownBag - "Terraform Loops: for_each vs count"
-- [ ] Week 9: Terraform + Vault Integration Demo
-- [ ] Week 11: Full HashiCorp Stack Demo
+**Key takeaway:** Locals compose values from multiple sources and reduce repetition. Use `merge(local.tags, {...})` to consistently apply base tags while adding resource-specific ones.
 
 ---
 
-## 🛡️ Accountability & Habits
+#### Day 4: The count Meta-Argument
+**Directory:** [`04/`](04/)
+**Concepts covered:**
+- `count` meta-argument for creating multiple resource instances
+- `count.index` for accessing the current iteration (0-based)
+- Using count with list variables for parallel configuration
+- Using count with `list(object())` for complex configurations
+- Resource referencing with bracket notation: `resource[index]`
 
-**Public Commitments:**
-- This repo (learning in public)
-- Weekly check-ins with accountability coach
-- Social media progress updates
-- Weekly vBrownBag episodes
-
-**ADHD Defenses:**
-- Pomodoro Technique (25-min focus blocks)
-- StayFocusd browser extension (blocks distractions during study time)
-- Kurzgesagt Habit Journal (daily progress tracking)
-- "Shiny Object Jar" (capture tangent ideas for later)
-
-**Weekly Check-In Format:**
-- Monday AM: Week started, focus areas declared
-- Friday PM: Week complete, shipped content links, next week preview
+**Key takeaway:** Count enables DRY infrastructure—define once, create many. Access instances with bracket notation and use `count.index` to customize each instance.
 
 ---
 
-**Follow along:**
-- Blog: [mistwire.com](https://mistwire.com)
-- LinkedIn: [chrisfwilliams](https://linkedin.com/in/chrisfwilliams)
-- Podcast: [vBrownBag](https://vbrownbag.com)
+#### Day 5: Go Fundamentals - Switch Statements
+**Directory:** [`05/`](05/)
+**Language:** Go
+**Concepts covered:**
+- Package declaration (`package main` for executables)
+- Import statements and Go standard library
+- Short variable declaration (`:=`) with type inference
+- `rand.Intn()` for random number generation
+- `Printf` with format verbs (`%v`, `%d`, `%s`, `%T`, `%t`)
+- Expression-less switch statements (`switch { case condition: ... }`)
+- Case evaluation order and automatic break behavior
+- How Go's switch differs from C/Java/JavaScript
+
+**Key takeaway:** Go's expression-less switch is powerful for evaluating multiple different boolean conditions. Unlike other languages, it automatically exits after a match—no explicit `break` needed.
+
+---
+
+### Week 1 Progress: 🟡 In Progress (5/7 days complete)
+
+---
+
+## 🎯 Learning Approach
+
+**Terraform Focus (Primary)**
+- Fundamentals: blocks, state, modules, functions
+- AWS-focused examples (most common provider)
+- Production patterns: tagging, naming, organization
+- Advanced concepts: workspaces, remote state, modules
+
+**Go Focus (Supporting)**
+- Language fundamentals: syntax, types, control flow
+- Standard library exploration
+- Building toward understanding Terraform provider code
+- Hands-on exercises from Udemy Go course
+
+**Alternating Pattern:** Days mix between Terraform and Go to keep both skills progressing. Eventually, these converge when building custom providers.
 
 ---
 
 ## 📚 Resources
 
-**Primary Course:**
-- [Terraform for Beginners with Labs](https://udemy.com/course/terraform-for-beginners-with-labs) by Bryan Krausen
+**Terraform:**
+- [Terraform for Beginners with Labs](https://udemy.com/course/terraform-for-beginners-with-labs) by Bryan Krausen (Primary course)
+- [HashiCorp Learn](https://developer.hashicorp.com/terraform/tutorials) (Official tutorials)
+- [Terraform Documentation](https://www.terraform.io/docs) (Reference)
+- [Terraform AWS Provider Docs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs) (AWS-specific)
 
-**References:**
-- [HashiCorp Learn](https://developer.hashicorp.com/terraform/tutorials)
-- [Terraform Documentation](https://www.terraform.io/docs)
-- [Terraform AWS Provider Docs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs)
+**Go:**
+- [Learn How to Code: Google's Go (golang) Programming Language](https://www.udemy.com/course/learn-how-to-code/) (Primary course)
+- [Go by Example](https://gobyexample.com/) (Quick reference)
+- [Effective Go](https://go.dev/doc/effective_go) (Best practices)
+- [A Tour of Go](https://go.dev/tour/) (Interactive tutorial)
 
-**Books:**
-- [Will add more as I reference them]
-
----
-
-## 📊 Metrics & Milestones
-
-**Input Metrics** (What I Control):
-- [ ] 70+ hours of focused Terraform learning (avg 6 hours/week)
-- [ ] 12+ projects completed and documented
-- [ ] 10+ pieces of published content (blog/video)
-- [ ] 90+ days of habit tracking (daily X's on the calendar)
-
-**Output Metrics** (What I'm Building Toward):
-- [ ] Contribute to 1+ Terraform providers
-- [ ] Feel confident (not panicked) when asked to live-demo advanced Terraform
-
-**The Real Win:**
-- [ ] On April 4, 2025, look back and say: "I'm a different technical professional now."
+**Terraform Provider Development:**
+- [Terraform Plugin Framework](https://developer.hashicorp.com/terraform/plugin/framework) (When ready)
+- [Plugin Development Tutorial](https://developer.hashicorp.com/terraform/tutorials/providers-plugin-framework) (Future reference)
 
 ---
 
-## 🔄 Adjustments & Learnings
+## 💡 Notes for Future Self
 
-This section will track major pivots, unexpected challenges, and lessons learned:
+**What's working:**
+- Detailed inline comments make it easy to remember concepts later
+- Alternating between Terraform and Go keeps learning fresh
+- Building incrementally on previous days' concepts creates solid foundation
 
-**Week 1 Adjustment:**
-- Extended completion to Sunday (Jan 12) due to employee reviews + vBrownBag commitments
-- **Lesson:** Real job always comes first; the plan must flex around actual responsibilities
-- **Insight:** 66% course completion (70/106 sessions) in 1 day shows strong foundation—just needed realistic timeline
+**Remember:**
+- This is a flexible timeline—90 learning sessions, not necessarily consecutive days
+- Every expert was once a beginner; progress over perfection
+- The detailed comments might seem excessive now, but future-you will appreciate them
+
+---
+
+## 📊 Milestones
+
+- [ ] Complete 30 days (1/3 of journey)
+- [ ] Complete 60 days (2/3 of journey)
+- [ ] Complete all 90 learning sessions
+- [ ] Build first custom Terraform provider (stretch goal)
+- [ ] Contribute to an existing Terraform provider (stretch goal)
