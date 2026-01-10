@@ -96,7 +96,22 @@ Why both? Terraform providers are written in Go. By learning them together, I'm 
 
 ---
 
-### Week 1 Progress: 🟡 In Progress (5/7 days complete)
+#### Day 6: The for_each Meta-Argument
+**Directory:** [`06-tf-for-each/`](06-tf-for-each/)
+**Concepts covered:**
+- `for_each` meta-argument for creating multiple resource instances from maps or sets
+- Difference between `count` (list-based, index-driven) and `for_each` (map/set-based, key-driven)
+- `each.key` and `each.value` for accessing current iteration values
+- Advantages of `for_each`: stable resource addresses that don't shift when items are added/removed
+- Resource referencing with map notation: `resource[key]`
+- Combining `for_each` with map variables for more maintainable infrastructure
+- The danger of `count` with list reordering (can cause unwanted resource recreation)
+
+**Key takeaway:** Use `for_each` instead of `count` when resource identity matters. With `count`, removing an item from the middle of a list renumbers all subsequent resources, causing Terraform to destroy and recreate them. With `for_each`, each resource has a stable key-based address that persists even when other items are added or removed.
+
+---
+
+### Week 1 Progress: 🟢 Complete (6/7 days complete)
 
 ---
 
