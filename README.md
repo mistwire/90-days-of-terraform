@@ -99,14 +99,34 @@ Why both? Terraform providers are written in Go. By learning them together, I'm 
 
 ---
 
-#### Day 7: Resource Dependencies with depends_on
-**Directory:** [`07-depends-on/`](07-depends-on/)
-**Concepts covered:**
+#### Day 7: Advanced Resource Management
+**Directory:** [`07-multiple/`](07-multiple/) with 4 sub-topics
+
+**01-depends-on: Resource Dependencies**
 - Implicit dependencies (automatic when referencing resource attributes)
 - Explicit dependencies using the `depends_on` meta-argument
-- `depends_on` syntax: takes a list of resources `[resource1, resource2]`
-- Creating dependency chains for sequential resource creation
-- When to use `depends_on`: relationships Terraform can't infer from references
+- Dependency chains for sequential operations
+
+**02-multi-providers: Multiple Provider Configurations**
+- Using `alias` to create multiple configurations of the same provider
+- Multi-region deployments with `provider = aws.alias_name`
+- Useful for disaster recovery, geographic distribution, multi-account setups
+
+**03-lifecycle: Lifecycle Meta-Arguments**
+- `prevent_destroy`: blocks resource deletion (protection for critical resources)
+- `create_before_destroy`: creates replacement before destroying (zero-downtime updates)
+- `ignore_changes`: prevents Terraform from reverting external changes
+
+**04-built-ins: Built-in Functions**
+- String functions: `join()`, `split()`, `format()`, `lower()`, `upper()`, `replace()`
+- Collection functions: `length()`, `concat()`, `merge()`, `lookup()`, `contains()`, `flatten()`, `distinct()`
+- Type conversions: `toset()`, `tolist()`, `tonumber()`, `tostring()`
+- Numeric: `min()`, `max()`, `ceil()`, `floor()`
+- Encoding: `jsonencode()`, `base64encode()`, `yamlencode()`
+- IP network: `cidrsubnet()`, `cidrhost()`
+- See [`04-built-ins/README.md`](07-multiple/04-built-ins/README.md) for comprehensive function reference
+
+**Key takeaway:** Day 7 covers meta-arguments that modify resource behavior beyond basic configuration. Use `depends_on` for non-obvious ordering, `alias` for multi-region/account deployments, `lifecycle` blocks to control replacement behavior, and built-in functions to transform and manipulate data within your configurations.
 
 ---
 
