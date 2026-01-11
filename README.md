@@ -26,7 +26,7 @@ Why both? Terraform providers are written in Go. By learning them together, I'm 
 ### Week 1: Foundations (January 6-12, 2025)
 
 #### Day 1: Terraform Basics - Core Blocks
-**Directory:** [`01/`](01/)
+**Directory:** [`01-terraform-basics/`](01-terraform-basics/)
 **Concepts covered:**
 - Terraform, Provider, Variable, Data, Resource, and Output blocks
 - CIDR notation and VPC networking fundamentals
@@ -36,12 +36,10 @@ Why both? Terraform providers are written in Go. By learning them together, I'm 
 - The splat operator `[*]` for accessing attributes from counted resources
 - `cidrsubnet()` function for calculating subnet CIDR blocks
 
-**Key takeaway:** Understanding the six core block types is the foundation for everything in Terraform.
-
 ---
 
 #### Day 2: Data Sources and Network Structure
-**Directory:** [`02/`](02/)
+**Directory:** [`02-data-sources/`](02-data-sources/)
 **Concepts covered:**
 - Deep dive into AWS data sources (regions, AZs, caller identity)
 - VPC structure with DNS settings
@@ -49,12 +47,10 @@ Why both? Terraform providers are written in Go. By learning them together, I'm 
 - Route tables and traffic flow fundamentals
 - Tagging strategies for organization and cost tracking
 
-**Key takeaway:** Data sources are read-only queries that fetch existing infrastructure information—essential for making configurations dynamic and aware of their environment.
-
 ---
 
 #### Day 3: Locals and the merge() Function
-**Directory:** [`03/`](03/)
+**Directory:** [`03-locals/`](03-locals/)
 **Concepts covered:**
 - Local values for DRY principle and computed values
 - `merge()` function for combining maps
@@ -63,12 +59,10 @@ Why both? Terraform providers are written in Go. By learning them together, I'm 
 - Security groups as virtual firewalls (stateful, default-deny)
 - Ingress and egress rules (inbound/outbound traffic)
 
-**Key takeaway:** Locals compose values from multiple sources and reduce repetition. Use `merge(local.tags, {...})` to consistently apply base tags while adding resource-specific ones.
-
 ---
 
 #### Day 4: The count Meta-Argument
-**Directory:** [`04/`](04/)
+**Directory:** [`04-count/`](04-count/)
 **Concepts covered:**
 - `count` meta-argument for creating multiple resource instances
 - `count.index` for accessing the current iteration (0-based)
@@ -76,12 +70,10 @@ Why both? Terraform providers are written in Go. By learning them together, I'm 
 - Using count with `list(object())` for complex configurations
 - Resource referencing with bracket notation: `resource[index]`
 
-**Key takeaway:** Count enables DRY infrastructure—define once, create many. Access instances with bracket notation and use `count.index` to customize each instance.
-
 ---
 
 #### Day 5: Go Fundamentals - Control Flow & Types
-**Directory:** [`05/`](05/)
+**Directory:** [`05-go-basics/`](05-go-basics/)
 **Language:** Go
 **Concepts covered:**
 - User input with `fmt.Scanln()`, multiple return values, error handling (`if err != nil`)
@@ -91,8 +83,6 @@ Why both? Terraform providers are written in Go. By learning them together, I'm 
 - Comparison operators (`==`, `!=`, `<`, `>`) and logical operators (`&&`, `||`, `!`)
 - The `init()` function and short-circuit evaluation
 - If statement with initialization (comma-ok idiom), scoped variables
-
-**Key takeaway:** Go is explicit by design—no implicit type conversions, unused variables cause errors, and the blank identifier `_` makes ignored values intentional. The comma-ok idiom (`if val, ok := map[key]; ok`) is a fundamental Go pattern for safe operations.
 
 ---
 
@@ -107,11 +97,20 @@ Why both? Terraform providers are written in Go. By learning them together, I'm 
 - Combining `for_each` with map variables for more maintainable infrastructure
 - The danger of `count` with list reordering (can cause unwanted resource recreation)
 
-**Key takeaway:** Use `for_each` instead of `count` when resource identity matters. With `count`, removing an item from the middle of a list renumbers all subsequent resources, causing Terraform to destroy and recreate them. With `for_each`, each resource has a stable key-based address that persists even when other items are added or removed.
+---
+
+#### Day 7: Resource Dependencies with depends_on
+**Directory:** [`07-depends-on/`](07-depends-on/)
+**Concepts covered:**
+- Implicit dependencies (automatic when referencing resource attributes)
+- Explicit dependencies using the `depends_on` meta-argument
+- `depends_on` syntax: takes a list of resources `[resource1, resource2]`
+- Creating dependency chains for sequential resource creation
+- When to use `depends_on`: relationships Terraform can't infer from references
 
 ---
 
-### Week 1 Progress: 🟢 Complete (6/7 days complete)
+### Week 1 Progress: 🎯 Complete! (7/7 days complete)
 
 ---
 
