@@ -126,7 +126,6 @@ Why both? Terraform providers are written in Go. By learning them together, I'm 
 - IP network: `cidrsubnet()`, `cidrhost()`
 - See [`04-built-ins/README.md`](07-multiple/04-built-ins/README.md) for comprehensive function reference
 
-**Key takeaway:** Day 7 covers meta-arguments that modify resource behavior beyond basic configuration. Use `depends_on` for non-obvious ordering, `alias` for multi-region/account deployments, `lifecycle` blocks to control replacement behavior, and built-in functions to transform and manipulate data within your configurations.
 
 ---
 
