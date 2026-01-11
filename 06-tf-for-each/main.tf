@@ -24,7 +24,10 @@ resource "aws_subnet" "subnet" {
 
   tags = {
     Name = "subnet-${count.index + 1}"  # count.index is 0-based, so add 1 for human-readable names
-    Tier = count.index < 1 ? "public" : "private"  # Ternary operator for conditional tagging
+    # Ternary operator: condition ? value_if_true : value_if_false
+    # If count.index < 1 (i.e., index is 0), then "public", else "private"
+    # Result: subnet[0] gets Tier="public", subnet[1] gets Tier="private"
+    Tier = count.index < 1 ? "public" : "private"
   }
 }
 
