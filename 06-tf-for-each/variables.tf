@@ -14,7 +14,7 @@ variable "subnet_cidr_blocks" {
   type        = list(string)
   # DANGER: If you remove "10.0.2.0/24" from the middle, the 3rd element becomes the 2nd
   # This causes Terraform to destroy subnet[2] and recreate subnet[1] with new values!
-  default     = ["10.0.1.0/24", "10.0.2.0/24"]#, "10.0.3.0/24"] <- removed 3rd element
+  default = ["10.0.1.0/24", "10.0.2.0/24"] #, "10.0.3.0/24"] <- removed 3rd element
 }
 
 variable "availability_zones" {
@@ -42,7 +42,7 @@ variable "sg_ports" {
 
 variable "subnet_config" {
   description = "Map of subnet configurations"
-  type        = map(string)  # Map where keys are subnet names, values are CIDR blocks
+  type        = map(string) # Map where keys are subnet names, values are CIDR blocks
   # BENEFIT: You can comment out "private2" and only that specific subnet is affected
   # No other subnets are touched because they have stable key-based addresses
   default = {
@@ -54,7 +54,7 @@ variable "subnet_config" {
 
 variable "subnet_azs" {
   description = "Map of subnet availability zones"
-  type        = map(string)  # Map where keys match subnet_config keys, values are AZ names
+  type        = map(string) # Map where keys match subnet_config keys, values are AZ names
   # The keys here should match the keys in subnet_config for proper lookup
   default = {
     "public"   = "us-east-1a"
@@ -65,20 +65,20 @@ variable "subnet_azs" {
 
 variable "security_group_config" {
   description = "Map of security group ports"
-  type        = map(number)  # Map where keys are SG names, values are port numbers
+  type        = map(number) # Map where keys are SG names, values are port numbers
   # BENEFIT: Adding "cache" here creates a new security group without affecting existing ones
   # With count, this would require careful list management to avoid resource recreation
   default = {
-    "web" = 80      # HTTP
-    "app" = 8080    # Application server
-    "db"  = 3306    # MySQL
-    "cache" = 6379  # Redis - new item added without affecting other security groups!
+    "web"   = 80   # HTTP
+    "app"   = 8080 # Application server
+    "db"    = 3306 # MySQL
+    "cache" = 6379 # Redis - new item added without affecting other security groups!
   }
 }
 
 variable "route_tables" {
   description = "Map of route tables to create"
-  type        = map(string)  # Map where keys are route table names, values are descriptions
+  type        = map(string) # Map where keys are route table names, values are descriptions
   default = {
     "public"   = "Public route table"
     "private1" = "Private route table 1"

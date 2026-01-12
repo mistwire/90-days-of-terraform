@@ -36,15 +36,15 @@ output "function_examples" {
   description = "Demonstrates multiple built-in functions"
   value = {
     # join() concatenates list elements with a separator
-    "join_example"   = join("-", [var.environment, "vpc"])
+    "join_example" = join("-", [var.environment, "vpc"])
 
     # length() returns collection size
     "length_example" = length(var.availability_zones)
 
     # toset() removes duplicates from a list
-    "toset_example"  = toset(var.teams)
+    "toset_example" = toset(var.teams)
 
     # min() returns the smallest number
-    "min_example"    = min(length(var.availability_zones), length(var.subnet_cidrs))
+    "min_example" = min(length(var.availability_zones), length(var.subnet_cidrs))
   }
 }

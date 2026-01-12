@@ -18,15 +18,15 @@ terraform {
 # Primary region provider configuration
 # This is the "primary" alias - referenced as: provider = aws.primary
 provider "aws" {
-  region = var.primary_region  # e.g., us-east-1
-  alias  = "primary"            # Unique identifier for this provider configuration
+  region = var.primary_region # e.g., us-east-1
+  alias  = "primary"          # Unique identifier for this provider configuration
 }
 
 # Secondary region provider configuration
 # This is the "secondary" alias - referenced as: provider = aws.secondary
 provider "aws" {
-  region = var.secondary_region  # e.g., us-west-2
-  alias  = "secondary"            # Different alias for the second region
+  region = var.secondary_region # e.g., us-west-2
+  alias  = "secondary"          # Different alias for the second region
 }
 
 # USAGE: In resources, specify which provider to use:

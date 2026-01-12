@@ -8,8 +8,8 @@ data "aws_caller_identity" "current" {}
 # This generates a random 8-character suffix to append to the bucket name
 resource "random_string" "suffix" {
   length  = 8
-  special = false  # No special characters (!@#$, etc.)
-  upper   = false  # Only lowercase letters
+  special = false # No special characters (!@#$, etc.)
+  upper   = false # Only lowercase letters
 }
 
 # VPC - Virtual Private Cloud
@@ -29,7 +29,7 @@ resource "aws_vpc" "main" {
 # Subnet within the VPC
 # IMPLICIT dependency: references aws_vpc.main.id, so Terraform waits for VPC creation
 resource "aws_subnet" "public" {
-  vpc_id            = aws_vpc.main.id  # Creates implicit dependency on aws_vpc.main
+  vpc_id            = aws_vpc.main.id # Creates implicit dependency on aws_vpc.main
   cidr_block        = var.subnet_cidr
   availability_zone = "${var.region}a"
 
@@ -42,7 +42,7 @@ resource "aws_subnet" "public" {
 # Internet Gateway
 # IMPLICIT dependency: references aws_vpc.main.id
 resource "aws_internet_gateway" "igw" {
-  vpc_id = aws_vpc.main.id  # Creates implicit dependency on aws_vpc.main
+  vpc_id = aws_vpc.main.id # Creates implicit dependency on aws_vpc.main
 
   tags = {
     Name        = "main-igw"
@@ -54,11 +54,11 @@ resource "aws_internet_gateway" "igw" {
 # IMPLICIT dependency: references both aws_vpc.main.id and aws_internet_gateway.igw.id
 # Terraform automatically creates the dependency graph: VPC -> IGW -> Route Table
 resource "aws_route_table" "public" {
-  vpc_id = aws_vpc.main.id  # Implicit dependency on VPC
+  vpc_id = aws_vpc.main.id # Implicit dependency on VPC
 
   route {
-    cidr_block = "0.0.0.0/0"                    # Route all traffic
-    gateway_id = aws_internet_gateway.igw.id   # Implicit dependency on IGW
+    cidr_block = "0.0.0.0/0"                 # Route all traffic
+    gateway_id = aws_internet_gateway.igw.id # Implicit dependency on IGW
   }
 
   tags = {
@@ -70,7 +70,7 @@ resource "aws_route_table" "public" {
 # S3 Bucket for Application Logs
 # IMPLICIT dependency: references random_string.suffix.result
 resource "aws_s3_bucket" "logs" {
-  bucket = "logs-${random_string.suffix.result}"  # Implicit dependency on random_string
+  bucket = "logs-${random_string.suffix.result}" # Implicit dependency on random_string
 
   tags = {
     Name        = "logs-bucket"
@@ -82,8 +82,8 @@ resource "aws_s3_bucket" "logs" {
 # Associates the route table with the subnet to enable routing
 # IMPLICIT dependency: references both subnet and route table IDs
 resource "aws_route_table_association" "public" {
-  subnet_id      = aws_subnet.public.id       # Implicit dependency on subnet
-  route_table_id = aws_route_table.public.id  # Implicit dependency on route table
+  subnet_id      = aws_subnet.public.id      # Implicit dependency on subnet
+  route_table_id = aws_route_table.public.id # Implicit dependency on route table
 }
 
 # Security Group for Web Servers
@@ -91,7 +91,7 @@ resource "aws_route_table_association" "public" {
 resource "aws_security_group" "web" {
   name        = "web-sg"
   description = "Allow web traffic"
-  vpc_id      = aws_vpc.main.id  # Implicit dependency on VPC
+  vpc_id      = aws_vpc.main.id # Implicit dependency on VPC
 
   egress {
     from_port   = 0
@@ -110,22 +110,22 @@ resource "aws_security_group" "web" {
 # IMPLICIT dependencies: references aws_s3_bucket.logs and data.aws_caller_identity.current
 # The jsonencode() function converts a Terraform object into a JSON string
 resource "aws_s3_bucket_policy" "logs_policy" {
-  bucket = aws_s3_bucket.logs.id  # Implicit dependency on bucket
+  bucket = aws_s3_bucket.logs.id # Implicit dependency on bucket
 
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
       {
         Action = [
-          "s3:GetObject"  # Allow reading objects from the bucket
+          "s3:GetObject" # Allow reading objects from the bucket
         ]
         Effect = "Allow"
         Resource = [
-          aws_s3_bucket.logs.arn,        # The bucket itself
-          "${aws_s3_bucket.logs.arn}/*"  # All objects within the bucket
+          aws_s3_bucket.logs.arn,       # The bucket itself
+          "${aws_s3_bucket.logs.arn}/*" # All objects within the bucket
         ]
         Principal = {
-          AWS = "${data.aws_caller_identity.current.arn}"  # Current AWS user/role
+          AWS = "${data.aws_caller_identity.current.arn}" # Current AWS user/role
         }
       }
     ]
@@ -139,12 +139,12 @@ resource "aws_s3_bucket_policy" "logs_policy" {
 # This demonstrates the depends_on meta-argument - a way to manually declare dependencies
 # that Terraform cannot automatically infer from resource references
 resource "aws_security_group_rule" "http" {
-  type              = "ingress"  # Inbound rule
+  type              = "ingress" # Inbound rule
   from_port         = 80
   to_port           = 80
   protocol          = "tcp"
   cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = aws_security_group.web.id  # Implicit dependency on security group
+  security_group_id = aws_security_group.web.id # Implicit dependency on security group
 
   # EXPLICIT DEPENDENCY using depends_on
   # WHY? There's no direct reference to the route table association in this resource,
@@ -161,10 +161,10 @@ resource "aws_security_group_rule" "http" {
 # Even though we reference the bucket ID (implicit dependency on the bucket),
 # we also want to ensure the bucket policy is applied BEFORE enabling versioning
 resource "aws_s3_bucket_versioning" "logs_versioning" {
-  bucket = aws_s3_bucket.logs.id  # Implicit dependency on bucket
+  bucket = aws_s3_bucket.logs.id # Implicit dependency on bucket
 
   versioning_configuration {
-    status = "Enabled"  # Turn on versioning to keep object history
+    status = "Enabled" # Turn on versioning to keep object history
   }
 
   # EXPLICIT DEPENDENCY using depends_on
@@ -179,10 +179,10 @@ resource "aws_s3_bucket_versioning" "logs_versioning" {
 # S3 Bucket Logging Configuration
 # Enables logging of access to this bucket (stores logs in the same bucket under "log/" prefix)
 resource "aws_s3_bucket_logging" "logs_logging" {
-  bucket = aws_s3_bucket.logs.id  # Implicit dependency on bucket
+  bucket = aws_s3_bucket.logs.id # Implicit dependency on bucket
 
-  target_bucket = aws_s3_bucket.logs.id  # Store logs in the same bucket
-  target_prefix = "log/"                 # Prefix for log objects
+  target_bucket = aws_s3_bucket.logs.id # Store logs in the same bucket
+  target_prefix = "log/"                # Prefix for log objects
 
   # EXPLICIT DEPENDENCY using depends_on
   # WHY? Creates a dependency chain: bucket -> policy -> versioning -> logging

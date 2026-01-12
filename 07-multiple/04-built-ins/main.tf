@@ -44,7 +44,7 @@ resource "aws_subnet" "main" {
 # Example: toset(["a", "b", "a", "c"]) returns {"a", "b", "c"}
 
 locals {
-  unique_teams = toset(var.teams)  # Removes duplicate team names
+  unique_teams = toset(var.teams) # Removes duplicate team names
 }
 
 # Security group demonstrating use of the unique teams set

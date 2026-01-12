@@ -126,10 +126,38 @@ Why both? Terraform providers are written in Go. By learning them together, I'm 
 - IP network: `cidrsubnet()`, `cidrhost()`
 - See [`04-built-ins/README.md`](07-multiple/04-built-ins/README.md) for comprehensive function reference
 
+---
+
+#### Day 8: Terraform Modules
+**Directory:** [`08-modules/`](08-modules/) with 3 implementation patterns
+
+**01: Public Modules from Terraform Registry**
+- Using public modules from `registry.terraform.io`
+- Module source format: `namespace/name/provider` (e.g., `terraform-aws-modules/vpc/aws`)
+- Pinning module versions for stability
+- Module inputs (variables) and outputs
+- Module dependencies via output references
+- Reusing modules with different configurations
+- Using `for_each` with modules
+
+**02: Local Custom Modules**
+- Creating your own modules with local paths (`./modules/name`)
+- Module structure: `main.tf`, `variables.tf`, `outputs.tf`
+- Encapsulation: hiding implementation, exposing only necessary outputs
+- Module dependency chains
+- Running `terraform init` after module changes
+
+**03: Module Composition**
+- Building complex infrastructure from small, focused modules
+- Single Responsibility Principle for modules
+- Combining module outputs as inputs to other modules
+- Benefits: reusability, testability, flexibility
 
 ---
 
 ### Week 1 Progress: 🎯 Complete! (7/7 days complete)
+
+### Week 2 Progress: 🟡 In Progress (1/7 days complete)
 
 ---
 

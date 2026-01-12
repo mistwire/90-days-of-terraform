@@ -13,7 +13,7 @@ output "vpc_id" {
 # The order matches the count.index order
 output "subnet_count_ids" {
   description = "The IDs of the count-based subnets"
-  value       = aws_subnet.subnet[*].id  # Splat operator gets all instances
+  value       = aws_subnet.subnet[*].id # Splat operator gets all instances
 }
 
 # ====================================================================
@@ -25,7 +25,7 @@ output "subnet_count_ids" {
 # Each key in the output corresponds to the for_each key
 output "subnet_foreach_ids" {
   description = "The IDs of the for_each-based subnets"
-  value       = aws_subnet.subnet_foreach  # Returns map of all subnet objects
+  value       = aws_subnet.subnet_foreach # Returns map of all subnet objects
 }
 
 # To get just the IDs in a map format, you could use:
@@ -33,7 +33,7 @@ output "subnet_foreach_ids" {
 
 output "security_group_foreach_ids" {
   description = "The IDs of the for_each-based security groups"
-  value       = aws_security_group.sg_foreach  # Returns map of all security group objects
+  value       = aws_security_group.sg_foreach # Returns map of all security group objects
 }
 
 # ====================================================================
@@ -42,6 +42,6 @@ output "security_group_foreach_ids" {
 
 output "route_table_ids" {
   description = "The IDs of the map-based route tables"
-  value       = aws_route_table.rt  # Returns map: {"public" = {...}, "private1" = {...}, "private2" = {...}}
+  value       = aws_route_table.rt # Returns map: {"public" = {...}, "private1" = {...}, "private2" = {...}}
 }
 

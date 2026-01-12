@@ -15,12 +15,12 @@ output "secondary_bucket_name" {
 # This confirms the provider alias worked correctly
 output "primary_bucket_region" {
   description = "Region of the primary S3 bucket"
-  value       = aws_s3_bucket.primary.region  # Should match var.primary_region
+  value       = aws_s3_bucket.primary.region # Should match var.primary_region
 }
 
 output "secondary_bucket_region" {
   description = "Region of the secondary S3 bucket"
-  value       = aws_s3_bucket.secondary.region  # Should match var.secondary_region
+  value       = aws_s3_bucket.secondary.region # Should match var.secondary_region
 }
 
 output "primary_sns_topic_arn" {

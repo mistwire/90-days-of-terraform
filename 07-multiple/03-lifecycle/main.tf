@@ -58,7 +58,7 @@ resource "aws_s3_bucket" "protected" {
   }
 
   lifecycle {
-    prevent_destroy = true  # Prevents accidental deletion
+    prevent_destroy = true # Prevents accidental deletion
   }
 }
 # To destroy this resource, you must first remove prevent_destroy from the config
@@ -92,7 +92,7 @@ resource "aws_dynamodb_table" "replacement" {
   }
 
   lifecycle {
-    create_before_destroy = true  # Ensures continuous availability during replacement
+    create_before_destroy = true # Ensures continuous availability during replacement
   }
 }
 
@@ -111,12 +111,12 @@ resource "aws_sns_topic" "updates" {
   tags = {
     Name        = "Updates Topic"
     Environment = var.environment
-    Version     = "2.0.0"  # Even if changed to "3.0.0" externally, Terraform won't revert it
+    Version     = "2.0.0" # Even if changed to "3.0.0" externally, Terraform won't revert it
   }
 
   lifecycle {
     ignore_changes = [
-      tags["Version"]  # Ignores changes to the Version tag only
+      tags["Version"] # Ignores changes to the Version tag only
     ]
     # You can also use ignore_changes = all to ignore all attribute changes
   }

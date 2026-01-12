@@ -14,7 +14,7 @@ resource "random_string" "suffix" {
 # S3 Bucket in PRIMARY region
 # The provider meta-argument explicitly selects the "primary" alias configuration
 resource "aws_s3_bucket" "primary" {
-  provider = aws.primary  # Uses the primary provider (us-east-1)
+  provider = aws.primary # Uses the primary provider (us-east-1)
   bucket   = "primary-${var.environment}-${random_string.suffix.result}"
 
   tags = {
@@ -27,7 +27,7 @@ resource "aws_s3_bucket" "primary" {
 # S3 Bucket in SECONDARY region
 # Same resource type, different provider = different AWS region
 resource "aws_s3_bucket" "secondary" {
-  provider = aws.secondary  # Uses the secondary provider (us-west-2)
+  provider = aws.secondary # Uses the secondary provider (us-west-2)
   bucket   = "secondary-${var.environment}-${random_string.suffix.result}"
 
   tags = {
@@ -45,7 +45,7 @@ resource "aws_s3_bucket" "secondary" {
 
 # SNS Topic in PRIMARY region
 resource "aws_sns_topic" "primary" {
-  provider = aws.primary  # Deployed to primary region
+  provider = aws.primary # Deployed to primary region
   name     = "primary-${var.environment}-topic"
 
   tags = {
@@ -57,7 +57,7 @@ resource "aws_sns_topic" "primary" {
 
 # SNS Topic in SECONDARY region
 resource "aws_sns_topic" "secondary" {
-  provider = aws.secondary  # Deployed to secondary region
+  provider = aws.secondary # Deployed to secondary region
   name     = "secondary-${var.environment}-topic"
 
   tags = {
