@@ -155,9 +155,40 @@ Why both? Terraform providers are written in Go. By learning them together, I'm 
 
 ---
 
+#### Day 9: Terraform Import
+**Directory:** [`09-import/`](09-import/)
+
+**Importing Existing Resources:**
+- Bringing manually created resources under Terraform management
+- Legacy CLI import vs modern import blocks (Terraform 1.5+)
+- Import block syntax: `import { to = resource.name, id = "resource-id" }`
+- Version controlled, declarative, repeatable imports
+
+**The -generate-config-out Flag:**
+- Automatically generates resource configuration from existing infrastructure
+- Workflow: create import block → run `terraform plan -generate-config-out=file.tf` → review generated config
+- Eliminates manual configuration writing
+- Saves time and reduces errors
+
+**Finding Resource IDs:**
+- Different ID formats for different resource types (VPC: vpc-xxx, S3: bucket-name, etc.)
+- Using AWS CLI or Console to locate resource IDs
+- Provider documentation for ID format reference
+
+**Use Cases:**
+- Migrating manually created resources to Terraform
+- Recovering from lost state files
+- Taking over resources from other IaC tools
+- Multi-team collaboration scenarios
+
+
+See [`09-import/README.md`](09-import/README.md) for detailed hands-on examples
+
+---
+
 ### Week 1 Progress: 🎯 Complete! (7/7 days complete)
 
-### Week 2 Progress: 🟡 In Progress (1/7 days complete)
+### Week 2 Progress: 🟡 In Progress (2/7 days complete)
 
 ---
 
